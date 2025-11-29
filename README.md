@@ -26,39 +26,39 @@ Projekt struktúra
 
 Főbb fájlok és funkciók
 
-Instance.tf:
-1. EC2 instance létrehozása a megadott AMI alapján
-2. SSH kapcsolattal feltölti és futtatja a web.sh fájlt
-3. Provisionerek segítségével telepíti a weboldalt az instance-ra
+1. Instance.tf:
+- EC2 instance létrehozása a megadott AMI alapján
+- SSH kapcsolattal feltölti és futtatja a web.sh fájlt
+- Provisionerek segítségével telepíti a weboldalt az instance-ra
 
-InstID.tf:
-1. Lekérdezi a legfrissebb Ubuntu 22.04 AMI-t
-2. Outputként adja vissza az AMI ID-t
+2. InstID.tf:
+- Lekérdezi a legfrissebb Ubuntu 22.04 AMI-t
+- Outputként adja vissza az AMI ID-t
 
-KeyPair.tf:
-1. EC2 SSH kulcspár létrehozása deployer_key néven
-2. Megjegyzés: a publikus kulcsot a felhasználónak kell megadnia (yourkeyhere)
+3. KeyPair.tf:
+- EC2 SSH kulcspár létrehozása deployer_key néven
+- Megjegyzés: a publikus kulcsot a felhasználónak kell megadnia (yourkeyhere)
 
-Provider.tf:
-1. AWS provider konfigurációja
-2. Régió beállítása változó (var.region)
+4. Provider.tf:
+- AWS provider konfigurációja
+- Régió beállítása változó (var.region)
 
-SecGrp.tf:
-1. Security Group létrehozása deploy-sg néven
-2. SSH hozzáférés a saját IP-hez (youripiphere/32)
-3. HTTP hozzáférés mindenki számára (0.0.0.0/0)
-4. Kimenő forgalom engedélyezése IPv4 és IPv6 minden porton
+5. SecGrp.tf:
+- Security Group létrehozása deploy-sg néven
+- SSH hozzáférés a saját IP-hez (youripiphere/32)
+- HTTP hozzáférés mindenki számára (0.0.0.0/0)
+- Kimenő forgalom engedélyezése IPv4 és IPv6 minden porton
 
-Vars.tf:
-1. region (alapértelmezett: us-east-1)
-2. zone1 (alapértelmezett: us-east-1a)
-3. webuser (alapértelmezett: ubuntu)
-4. amiID (régióhoz kötött AMI ID)
+6. Vars.tf:
+- region (alapértelmezett: us-east-1)
+- zone1 (alapértelmezett: us-east-1a)
+- webuser (alapértelmezett: ubuntu)
+- amiID (régióhoz kötött AMI ID)
 
-web.sh:
-1. Ubuntu frissítése, Apache telepítése
-2. Példasablon letöltése és telepítése a /var/www/html/ könyvtárba
-3. Apache újraindítása a változtatások érvényesítéséhez
+7. web.sh:
+- Ubuntu frissítése, Apache telepítése
+- Példasablon letöltése és telepítése a /var/www/html/ könyvtárba
+- Apache újraindítása a változtatások érvényesítéséhez
 
 A projekt csak a kód futtatását célozza, nem tartalmaz érzékeny adatokat.
 A .terraform mappa és tfstate fájlok nincsenek a repóban.
