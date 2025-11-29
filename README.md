@@ -1,13 +1,15 @@
 Terraform Web Deployment Project
 Leírás
 
-Ez a projekt egy lépésről-lépésre követett Terraform gyakorlati kurzus kódját tartalmazza. A kurzus 4 gyakorlatból állt, és minden gyakorlat egyre több elemet adott hozzá az infrastruktúrához:
-AMI lekérdezése és EC2 Instance létrehozása (InstID.tf)
-Key Pair és Security Group konfigurálása (KeyPair.tf, SecGrp.tf)
-Provider és változók (Provider.tf, Vars.tf)
-Weboldal deployment automatizálása shell script segítségével (web.sh)
+Ez a projekt egy lépésről-lépésre követett Terraform gyakorlati kurzus kódját tartalmazza.
+A kurzus 4 gyakorlatból állt, és minden gyakorlat egyre több elemet adott hozzá az infrastruktúrához:
 
-A végső cél egy Ubuntu EC2 instance-ra telepíteni egy weboldal templatet Apache webszerverrel, teljesen automatizált módon Terraform és web.sh segítségével.
+1. AMI lekérdezése és EC2 Instance létrehozása (InstID.tf)
+2. Key Pair és Security Group konfigurálása (KeyPair.tf, SecGrp.tf)
+3. Provider és változók (Provider.tf, Vars.tf)
+4. Weboldal deployment automatizálása shell script (web.sh) segítségével
+
+A végső cél: egy Ubuntu EC2 instance-ra telepíteni egy weboldal templatet Apache webszerverrel, teljesen automatizált módon Terraform és web.sh segítségével.
 
 Projekt struktúra
 ├── Exercise1/
@@ -23,46 +25,45 @@ Projekt struktúra
 │   └── web.sh
 
 Főbb fájlok és funkciók
-Instance.tf
-EC2 instance létrehozása a megadott AMI alapján
 
-SSH kapcsolattal feltölti és futtatja a web.sh fájlt
+Instance.tf:
+1. EC2 instance létrehozása a megadott AMI alapján
+2. SSH kapcsolattal feltölti és futtatja a web.sh fájlt
+3. Provisionerek segítségével telepíti a weboldalt az instance-ra
 
-Provisionerek segítségével telepíti a weboldalt az instance-ra
-InstID.tf
+InstID.tf:
+1. Lekérdezi a legfrissebb Ubuntu 22.04 AMI-t
+2. Outputként adja vissza az AMI ID-t
 
-Lekérdezi a legfrissebb Ubuntu 22.04 AMI-t
-Outputként adja vissza az AMI ID-t
+KeyPair.tf:
+1. EC2 SSH kulcspár létrehozása deployer_key néven
+2. Megjegyzés: a publikus kulcsot a felhasználónak kell megadnia (yourkeyhere)
 
-KeyPair.tf
-EC2 SSH kulcspár létrehozása a deployer_key néven
-Megjegyzés: a publikus kulcsot a felhasználónak kell megadnia (yourkeyhere)
+Provider.tf:
+1. AWS provider konfigurációja
+2. Régió beállítása változó (var.region)
 
-Provider.tf
-AWS provider konfigurációja
+SecGrp.tf:
+1. Security Group létrehozása deploy-sg néven
+2. SSH hozzáférés a saját IP-hez (youripiphere/32)
+3. HTTP hozzáférés mindenki számára (0.0.0.0/0)
+4. Kimenő forgalom engedélyezése IPv4 és IPv6 minden porton
 
-Régió beállítása változó (var.region)
+Vars.tf:
+1. region (alapértelmezett: us-east-1)
+2. zone1 (alapértelmezett: us-east-1a)
+3. webuser (alapértelmezett: ubuntu)
+4. amiID (régióhoz kötött AMI ID)
 
-SecGrp.tf
-Security Group létrehozása deploy-sg néven
-SSH hozzáférés a saját IP-hez (youripiphere/32)
-HTTP hozzáférés mindenki számára (0.0.0.0/0)
-Kimenő forgalom engedélyezése IPv4 és IPv6 minden porton
+web.sh:
+1. Ubuntu frissítése, Apache telepítése
+2. Példasablon letöltése és telepítése a /var/www/html/ könyvtárba
+3. Apache újraindítása a változtatások érvényesítéséhez
 
-Vars.tf
-Változók konfigurálása:
-region (alapértelmezett: us-east-1)
-zone1 (alapértelmezett: us-east-1a)
-webuser (alapértelmezett: ubuntu)
-amiID (régióhoz kötött AMI ID)
+A projekt csak a kód futtatását célozza, nem tartalmaz érzékeny adatokat.
+A .terraform mappa és tfstate fájlok nincsenek a repóban.
 
-web.sh
-Ubuntu frissítése, Apache telepítése
-Példasablon letöltése és telepítése a /var/www/html/ könyvtárba
-Apache újraindítása a változtatások érvényesítéséhez
+Készítette
+Veres Szabolcs
 
-
-Figyelem: A projekt csak a kód futtatását célozza, nem tartalmaz érzékeny adatokat. A .terraform mappa és tfstate fájlok nem szerepelnek a repóban.
-
-Készítette: Veres Szabolcs
-Readme: ChatGPT
+README generálva: ChatGPT
